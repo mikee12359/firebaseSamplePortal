@@ -1,0 +1,17 @@
+/* Only demo */
+@media (max-width: 1000px) {
+  .welcome-message {
+    display: none;
+  }
+}
+
+.sk-spinner-three-bounce div {
+  background-color: #f8ac59 !important;
+}
+
+#reset-dashboard-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}

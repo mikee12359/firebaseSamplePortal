@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "soblessed-partner-portal",
+    "private_key_id": "92be32670b55855863b16fbd9b8307d106d6444f",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTC+o+iSF2L5Sc\nZGVGiawmNEzqrr3CbKEQfrYNQfdurD373ME4fo9TDTAB2fyFVgUH83WTMMYfavyE\nhIyOmN+dsTOGXdqghZCO6GncoLQF1OxEL2RjyFhH2AsY7eAOoUy24EUx0AFom5J0\nDR5FkiJGD4cfQgiRzzYLaTr0dNgmwOD8Ms45L79lWlwKs+43rGQF2ASlyGXu8uWC\nejtLT6JF8C/tulHHZ88K7FFwJlr4GTdlZU6LZJ12HxDnd7SxoW3gskiM2DFk1GxE\nVOMmGkEMrj2+2WV4N2CrM3lhMJhiPblx2wNQ1A5iTKhPLfRXC5QENeYXxGC0HkTF\n2M+vKmFNAgMBAAECggEACjmq2Q7PjTrKXKRMnHBxvzr5ww7UDWrEiCGiYd3F6xnO\nud0YZvAuRUCR4+LKCuoSK3lzQ1CNONsKSejRlgDTle2g+wd8zKw5tKdq71l4Nkr6\ni4qdbZDK+Z7+xzjb0zmjcuKPsx6TlS5X4S9FhurSE7hYl8dBsZtrPeu5J/M8Llxo\nO7Qda9hUe4no7d4tgCtCd9w17DnnFFvysuw0qEy40RYTCvOqyLcrfyb5CBbz3CYn\nRpEhDn9EZWbh3A6z35u8sbol0n8w3Au7UrTzQFEPLCJgNYsdj3ItyO7Bp40DIAfO\nnSqOrB2x6tb3gR/RMYdujULOn443WdVPUP36VnE2zQKBgQD/5aXUNYdb3NnOQXt1\nSQlFFLPQ9t9OLyBzvY+UqYOTzhe5ebaopM3nOXrfYITl28liF/p6ch2sQ1mrrfPQ\nKJ7CrtGfxnJR64oDjVGuzh3+DNtUGsVViba0bSEuqDB7gKpMMnFXCvEqX5fdiEKJ\ncVcWR9wfxpSI8w2le43OBR6GPwKBgQDTIaYHV+HnaG3D/m84U1HWHlbK9xrbvrPf\nScpa5eprOQPFC/E7HKlv5Q3fjZlgUDJ8o9jCUqGd4ls3obQWbVSmK5oMD8lbCalF\nrYL10QtJhpG694f9QEN2K5Ok2HVpDfs9ZQDyEo7AobcIhtJaVIipE/Jy47bY4/G+\nQm/2cmUtcwKBgQDSK4kRS42Ks07oCfweDghhBmnRXJF3I1mh9bSxQrBgesodeYu9\n4u2B1UHHqPw91VAHEu6UFpmsW/yP9mTjOBl8iBx+/3vxMGTAGhdWXM9hUqno37vn\nTx4R/fdc3KJFLR2xS1SvSrtcM/sE5d7QB5ihIg/2wSBJgmZY3atP5AB3/QKBgBgB\nz3suRwWlHjYXDFZ/QuLx+DSD/I3YFWPiZBwJ4KnohcE2JmvuSmXqybUNyM7mz5bU\nmqUd+DqXrn+Y531VWTa75nxQnzi21ISTwjxpVLs7jf6QfuoREJqzQcqQwmj7qgHF\nJmJgMdM9kC5sBic3TYLMPdlKg1QON0LHEywWveJ5AoGBAP0my5ilthqCwE4OLmIU\nf+jRdCTMJ5oDOrOcp7L7d9p022cp0fowm9Uhpbyk6detRBfgDQ2f0eQAUXdI0Fd3\nsHB1imXH9EcaYfYX9TClhVGgB3M+raZ8X/adwBYc613sWWAi6UBfmU6n+DYt2rQX\nRusr9FysHB9Rys3Uci4OSamP\n-----END PRIVATE KEY-----\n",
+    "client_email": "soblessedpartnerportal@soblessed-partner-portal.iam.gserviceaccount.com",
+    "client_id": "102250930419512527093",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/soblessedpartnerportal%40soblessed-partner-portal.iam.gserviceaccount.com"
+  }
+  
