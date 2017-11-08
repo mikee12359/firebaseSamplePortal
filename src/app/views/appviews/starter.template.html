@@ -17,7 +17,131 @@
     </div>
 
     <div class="row" style="margin-top: 20px;">
+            <div class="col-lg-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Inline form</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <form role="form" class="form-inline">
+                                <div class="form-group">
+                                    <label for="inputFirstName" class="sr-only">First Name</label>
+                                    <input type="firstname" name="firstName" [(ngModel)]="firstName" placeholder="first name" id="inputFirstName" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLastName" class="sr-only">Last Name</label>
+                                    <input type="lastname" placeholder="last name" name="lastName" [(ngModel)]="lastName" id="inputLastName" class="form-control">
+                                </div>
+                                <!-- <div class="checkbox m-r-xs">
+                                    <input type="checkbox" id="checkbox1">
+                                    <label for="checkbox1">
+                                        Remember me
+                                    </label>
+                                </div> -->
+                                <button class="btn btn-white" type="submit" (click)="addingDataToDatabase()" >Add Data</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        
+        <!-- <div class="col-lg-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Inline form</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">Config option 1</a>
+                            </li>
+                            <li><a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <label for="exampleInputEmail2" class="sr-only">Text to Shout</label>
+                            <input name="textToShout" [(ngModel)]='textToShout' type="email" placeholder="Enter text to shout" id="exampleInputEmail2" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword2" class="sr-only">Shouted</label>
+                            <input name="shoutedText" [(ngModel)]="shoutedText" type="text" id="exampleInputPassword2" class="form-control">
+                        </div>
+                        <button (click)="onShoutClick()" class="btn btn-white" type="submit">Shout!</button>
+                    </form>
+                </div>
+            </div>
+        </div> -->
+    </div>
 
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Basic Table</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#">Config option 1</a>
+                        </li>
+                        <li><a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let employee of this.employees ">
+                        <!-- <td >Mark</td> -->
+                        <td>{{ employee.firstname }}</td>
+                        <!-- <td>Otto</td> -->
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
 
     <!-- End 2nd Row Dashboard -->

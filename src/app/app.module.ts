@@ -1,3 +1,4 @@
+import { ShoutService } from './services/shout/shout.service';
 import { PartnerService } from './services/partner/partner.service';
 import { ToasterService } from './services/toaster/toaster.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -38,7 +39,7 @@ import {LayoutsModule} from "./components/common/layouts/layouts.module";
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, ToasterService, PartnerService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, ToasterService, PartnerService, ShoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

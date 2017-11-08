@@ -11,35 +11,26 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 @Injectable()
-export class PartnerService {
-    private partner: FirebaseObjectObservable<any>;
-    private cloudFunctionsApiUri: string = "https://us-central1-soblessed-86039.cloudfunctions.net";
-
-    private currentPartnerSource = new Subject<Partner>();
-    currentPartner$ = this.currentPartnerSource.asObservable();
-    currentPartnerObject: any = null;
-
-    setCurrentPartner(partner: Partner) {
-        this.currentPartnerObject = partner;
-        this.currentPartnerSource.next(partner);
-    }
+export class ShoutService {
+    // private partner: FirebaseObjectObservable<any>;
+    private shoutFunctionUri: string = "https://us-central1-xerkit-a2331.cloudfunctions.net/shoutMessage";
 
     constructor(private _firebaseDb: AngularFireDatabase, private _http: Http) {
         this.reset();
     }
 
     reset() {
-        this.setCurrentPartner(null);
     }
 
-    setCurrentPartnerByUid(uid: string) {
-        this._firebaseDb.object(`/partners/${uid}`).subscribe((partnerResult: Partner) => {
-            console.log(partnerResult);
-            this.setCurrentPartner(partnerResult);
-        }, error => {
-            console.error(error);
-            throw new Error(error);
-        });
+    getShoutText(textToShout: string): Observable<string> {
+        return this._http.get(this.shoutFunctionUri + '?textToShout=' + textToShout)
+        .map((resp: Response) => {
+            if (!resp.ok) {
+                throw new Error('Error in textToShout(textToShout: string)');
+            }
+            return resp.json();
+        })
+        .catch(error => Observable.throw(`Error in getShoutText(textToShout: string): ${error}`));
     }
 
     // from https://angular.io/docs/ts/latest/guide/server-communication.html
