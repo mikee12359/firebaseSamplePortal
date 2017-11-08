@@ -17,50 +17,54 @@
     </div>
 
     <div class="row" style="margin-top: 20px;">
-            <div class="col-lg-8">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Inline form</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#">Config option 1</a>
-                                    </li>
-                                    <li><a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Inline form</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form role="form" class="form-inline">
+                        <div class="form-group">
+                            <label for="inputFirstName" class="sr-only">First Name</label>
+                            <input type="firstname" name="firstName" [(ngModel)]="firstName" placeholder="first name" id="inputFirstName" class="form-control">
                         </div>
-                        <div class="ibox-content">
-                            <form role="form" class="form-inline">
-                                <div class="form-group">
-                                    <label for="inputFirstName" class="sr-only">First Name</label>
-                                    <input type="firstname" name="firstName" [(ngModel)]="firstName" placeholder="first name" id="inputFirstName" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputLastName" class="sr-only">Last Name</label>
-                                    <input type="lastname" placeholder="last name" name="lastName" [(ngModel)]="lastName" id="inputLastName" class="form-control">
-                                </div>
-                                <!-- <div class="checkbox m-r-xs">
+                        <div class="form-group">
+                            <label for="inputLastName" class="sr-only">Last Name</label>
+                            <input type="lastname" placeholder="last name" name="lastName" [(ngModel)]="lastName" id="inputLastName" class="form-control">
+                        </div>
+                        <!-- <div class="checkbox m-r-xs">
                                     <input type="checkbox" id="checkbox1">
                                     <label for="checkbox1">
                                         Remember me
                                     </label>
                                 </div> -->
-                                <button class="btn btn-white" type="submit" (click)="addingDataToDatabase()" >Add Data</button>
-                            </form>
+                        <div class="form-group">
+                            <button class="btn btn-white" type="submit" (click)="addingDataToDatabase()">Add Data</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
-        
+            </div>
+        </div>
+
         <!-- <div class="col-lg-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -112,31 +116,47 @@
                         <i class="fa fa-wrench"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">Config option 1</a>
+                        <li>
+                            <a href="#">Config option 1</a>
                         </li>
-                        <li><a href="#">Config option 2</a>
+                        <li>
+                            <a href="#">Config option 2</a>
                         </li>
                     </ul>
                     <a class="close-link">
                         <i class="fa fa-times"></i>
                     </a>
                 </div>
+
+                <input type="text" class="form-control input-sm m-b-xs" id="filter" placeholder="Search in table">
+
+                <!-- <a href="#"><i class="fa fa-sort-alpha-asc"></i> fa-sort-alpha-asc</a> -->
+
             </div>
             <div class="ibox-content">
 
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                    </tr>
+                        <tr>
+                            <th>First Name
+                                <button type="button" (click)="sortByFirstName()" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-sort"></span> Sort
+                                </button>
+                            </th>
+                            <th>Last Name
+                                <button type="button" (click)="sortByLastName()" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-sort"></span> Sort
+                                </button>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let employee of this.employees ">
-                        <!-- <td >Mark</td> -->
-                        <td>{{ employee.firstname }}</td>
-                        <!-- <td>Otto</td> -->
-                    </tr>
+                        <tr *ngFor="let employee of this.employees "> <!-- dapat sa main na element nimo ibutang ang *ngFor
+                            <!-- <td >Mark</td> -->
+                            <td>{{ employee.firstname }}</td>
+                            <td>{{ employee.lastname }}</td>
+                            <!-- <td>Otto</td> -->
+                        </tr>
                     </tbody>
                 </table>
 

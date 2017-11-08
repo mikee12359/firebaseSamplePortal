@@ -1,6 +1,7 @@
 // import { ShoutService } from '../../services/shout/shout.service';
 // import { observable } from 'rxjs/symbol/observable';
 // import { ToasterService } from '../../services/toaster/toaster.service';
+import { any } from 'codelyzer/util/function';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 // import { PartnerService } from '../../services/partner/partner.service';
@@ -52,12 +53,33 @@ export class StarterViewComponent implements OnDestroy, OnInit {
     this.nav.className += " white-bg";
 
     this.employeeListSubscription = this.employeeList.subscribe((result: Employee[]) => {
+      // result.sort();
       this.employees = result;
+      // this.employees.sort();
+      // console.dir(this.employees);
     })
     // if (this._partnerService.currentPartnerObject) {
     // } else {
     //   this._router.navigateByUrl("/login");
     // }
+  }
+
+  public sortByFirstName(): any {
+    
+    this.employees.sort((a, b) => {
+      if(a.firstname < b.firstname) return -1;
+      if(a.firstname > b.firstname) return 1;
+      return 0;
+  });
+  }
+
+  public sortByLastName(): any {
+    
+    this.employees.sort((a, b) => {
+      if(a.lastname < b.lastname) return -1;
+      if(a.lastname > b.lastname) return 1;
+      return 0;
+  });
   }
 
   reset() {
