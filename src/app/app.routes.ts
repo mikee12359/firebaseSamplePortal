@@ -9,6 +9,7 @@ import {Dashboard5Component} from "./views/dashboards/dashboard5.component";
 
 import {StarterViewComponent} from "./views/appviews/starterview.component";
 import {LoginComponent} from "./views/appviews/login.component";
+import {TodoListComponent} from "./views/appviews/todolist.component";
 
 import {BlankLayoutComponent} from "./components/common/layouts/blankLayout.component";
 import {BasicLayoutComponent} from "./components/common/layouts/basicLayout.component";
@@ -38,7 +39,8 @@ export const ROUTES:Routes = [
   {
     path: '', component: BasicLayoutComponent,
     children: [
-      {path: 'starterview', component: StarterViewComponent}
+      {path: 'starterview', component: StarterViewComponent},
+      {path: 'todolist', component: TodoListComponent}
     ]
   },
   {

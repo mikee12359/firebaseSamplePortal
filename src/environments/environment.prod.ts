@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyC2aQTyz7C_jsCSEcuxpnK7nvIpwqnqQ1I",
-    authDomain: "apptry-f3948.firebaseapp.com",
-    databaseURL: "https://apptry-f3948.firebaseio.com",
-    projectId: "apptry-f3948",
-    storageBucket: "apptry-f3948.appspot.com",
-    messagingSenderId: "298540536085"
+    apiKey: "AIzaSyAEEM5j7w39Mi5G8hoHJaAuQDF6TgIx6OE",
+    authDomain: "todo-11b1f.firebaseapp.com",
+    databaseURL: "https://todo-11b1f.firebaseio.com",
+    projectId: "todo-11b1f",
+    storageBucket: "todo-11b1f.appspot.com",
+    messagingSenderId: "466747567763"
   }
 };

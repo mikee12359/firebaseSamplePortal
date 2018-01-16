@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,14 +71,20 @@ module.exports = require("firebase-functions");
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("firebase-admin");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // src/index.ts
 const functions = __webpack_require__(0);
-const admin = __webpack_require__(2);
-const ShoutMessage = __webpack_require__(3);
+const admin = __webpack_require__(1);
+const AddTodoItem = __webpack_require__(3);
 admin.initializeApp(functions.config().firebase);
 // export const addMessage = AddMessage.listener;
 // export const makeUpperCase = UpCaseMessages.listener;
@@ -86,14 +92,8 @@ admin.initializeApp(functions.config().firebase);
 // export const feedItemIdMaker = FeedItemIdMaker;
 // export const feedItemTimeStamper = FeedItemTimeStamper;
 // export const userTimeStamper = UserTimeStamper;
-exports.shoutMessage = ShoutMessage.listener;
+exports.addTodoItem = AddTodoItem.listener;
 
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("firebase-admin");
 
 /***/ }),
 /* 3 */
@@ -109,10 +109,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// src/upcase-messages/index.ts
 const functions = __webpack_require__(0);
-const admin = __webpack_require__(2);
+const admin = __webpack_require__(1);
 const cors = __webpack_require__(4);
+const todo_item_1 = __webpack_require__(5);
 const corsOptions = {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
     credentials: true,
@@ -122,27 +122,27 @@ const corsOptions = {
     origin: true
 };
 exports.listener = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
+    const prayerRequest = admin.database().ref('todoItems');
     var corsFn = cors(corsOptions);
-    corsFn(request, response, () => {
-        let textToShout = request.query.textToShout;
-        if (!textToShout) {
-            response.status(400).send("No Text Found");
+    corsFn(request, response, () => __awaiter(this, void 0, void 0, function* () {
+        let newTodoItem = new todo_item_1.TodoItem();
+        if (!request.query.id) {
+            response.status(400).send("Error no Id!");
             return;
         }
-        let shoutedText = textToShout.toUpperCase();
-        let shoutsRef = admin.database().ref("shouts");
-        let shoutObject = {
-            text: shoutedText
-        };
-        shoutsRef.push(shoutObject, (error) => {
-            if (error) {
-                response.status(500).send(`Database Error ${error}`);
-            }
-            else {
-                response.status(200).send(JSON.stringify(shoutedText));
-            }
-        });
-    });
+        if (!request.query.content) {
+            response.status(400).send("Error no content!");
+            return;
+        }
+        newTodoItem.id = request.query.id;
+        newTodoItem.content = request.query.content;
+        newTodoItem.isDone = false;
+        newTodoItem.createdAt = Date.now();
+        newTodoItem.updatedAt = newTodoItem.createdAt;
+        // let data = parseMessage(request.body);
+        yield prayerRequest.push(newTodoItem);
+        response.status(200).send("Success!");
+    }));
 }));
 
 
@@ -151,6 +151,17 @@ exports.listener = functions.https.onRequest((request, response) => __awaiter(th
 /***/ (function(module, exports) {
 
 module.exports = require("cors");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+class TodoItem {
+}
+exports.TodoItem = TodoItem;
+
 
 /***/ })
 /******/ ])));

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 import {StarterViewComponent} from "./starterview.component";
 import {LoginComponent} from "./login.component";
+import {TodoListComponent} from "./todolist.component";
 
 import {PeityModule } from '../../components/charts/peity';
 import {SparklineModule } from '../../components/charts/sparkline';
@@ -15,7 +16,8 @@ import {SparklineModule } from '../../components/charts/sparkline';
 @NgModule({
   declarations: [
     StarterViewComponent,
-    LoginComponent
+    LoginComponent,
+    TodoListComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import {SparklineModule } from '../../components/charts/sparkline';
   ],
   exports: [
     StarterViewComponent,
-    LoginComponent
+    LoginComponent,
+    TodoListComponent
   ],
 })
 

@@ -26,6 +26,7 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   employeeListSubscription: Subscription;
   firstName: string = "";
   lastName: string = "";
+  ageNumber: number = 0;
 
   // textToShout: string;
   // shoutedText: string;
@@ -34,16 +35,16 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   // user: FirebaseObjectObservable<any>;
 
   public constructor(
-    private db: AngularFireDatabase, 
-    private _router: Router, 
+    private db: AngularFireDatabase,
+    private _router: Router,
     // private _partnerService: PartnerService, 
-    private _ngZone: NgZone, 
+    private _ngZone: NgZone,
     // private _toastService: ToasterService,
     // private _shoutService: ShoutService
   ) {
     this.nav = document.querySelector('nav.navbar');
-    this.employeeList = db.list("xerkit");
-    console.log( this.employeeList );
+    this.employeeList = db.list("TODO");
+    console.log(this.employeeList);
     // this.employeeList.push;
     // db.object('')
     // this.users = db.list('/users');
@@ -65,21 +66,38 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   }
 
   public sortByFirstName(): any {
-    
+
     this.employees.sort((a, b) => {
-      if(a.firstname < b.firstname) return -1;
-      if(a.firstname > b.firstname) return 1;
+      if (a.firstname < b.firstname) return -1;
+      if (a.firstname > b.firstname) return 1;
       return 0;
-  });
+    });
   }
 
   public sortByLastName(): any {
-    
+
     this.employees.sort((a, b) => {
-      if(a.lastname < b.lastname) return -1;
-      if(a.lastname > b.lastname) return 1;
+      if (a.lastname < b.lastname) return -1;
+      if (a.lastname > b.lastname) return 1;
       return 0;
-  });
+    });
+  }
+
+  public sortByAge(): any {
+
+    this.employees.sort((a, b) => {
+      if (a.age < b.age) return -1;
+      if (a.age > b.age) return 1;
+      return 0;
+    })
+  }
+
+  public validateForm(): any {
+    let value = this.firstName;
+    if (value == "") {
+      alert("Name must be filled out!")
+    }
+    return false;
   }
 
   reset() {
@@ -90,9 +108,11 @@ export class StarterViewComponent implements OnDestroy, OnInit {
 
   public addingDataToDatabase(): void {
     // console.log(this.employeeList);
+    this.validateForm;
     this.employeeList.push({
       firstname: this.firstName,
-      lastname: this.lastName
+      lastname: this.lastName,
+      age: this.ageNumber
     });
     // console.log(this.lastName);
   }
@@ -109,7 +129,7 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   public ngOnDestroy(): any {
     this.nav.classList.remove("white-bg");
   }
-  
+
 }
 
 
