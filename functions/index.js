@@ -79,6 +79,7 @@ const admin = __webpack_require__(0);
 const AddTodoItem = __webpack_require__(2);
 const GetTodoItem = __webpack_require__(7);
 const UpdateTodoItem = __webpack_require__(8);
+const DeleteTodoItem = __webpack_require__(9);
 const firebaseDevCredential = __webpack_require__(6);
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp({
@@ -94,6 +95,7 @@ admin.initializeApp({
 exports.addTodoItem = AddTodoItem.listener;
 exports.getTodoItem = GetTodoItem.listener;
 exports.updateTodoItem = UpdateTodoItem.listener;
+exports.deleteTodoItem = DeleteTodoItem.listener;
 
 
 /***/ }),
@@ -294,6 +296,56 @@ exports.listener = functions.https.onRequest((request, response) => __awaiter(th
             return;
         });
         response.status(500).send("Database update error");
+    }));
+}));
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const functions = __webpack_require__(3);
+const admin = __webpack_require__(0);
+const cors = __webpack_require__(4);
+const todo_item_1 = __webpack_require__(5);
+const corsOptions = {
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+    credentials: true,
+    methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+    // origin: API_URL,
+    preflightContinue: false,
+    origin: true
+};
+exports.listener = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
+    const todoItemsDatabaseRef = admin.database().ref('todoItems');
+    var corsFn = cors(corsOptions);
+    corsFn(request, response, () => __awaiter(this, void 0, void 0, function* () {
+        if (request.method != "DELETE") {
+            response.status(400).send("Request Method not supported!");
+        }
+        // Get the id
+        let todoItemDeleteData = new todo_item_1.TodoItem();
+        todoItemDeleteData = request.body;
+        // Delete from database
+        todoItemsDatabaseRef.child(todoItemDeleteData.id).remove((error) => {
+            if (error) {
+                response.status(400).send("Unable to delete item");
+                return;
+            }
+        }).then(() => {
+            response.status(200).send(`Item ${todoItemDeleteData.id} has been successfully deleted.`);
+            return;
+        });
     }));
 }));
 
