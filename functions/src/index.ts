@@ -5,8 +5,14 @@ import * as AddMessage from './add-message';
 import * as UpCaseMessages from './upcase-messages';
 import * as ShoutMessage from './shout-message';
 import * as AddTodoItem from './add-todo-item';
+const firebaseDevCredential = require('../credentials/todo-dev-a3a22-firebase-adminsdk-5tnf9-ddf4bd2624.json');
 
-admin.initializeApp(functions.config().firebase);
+// admin.initializeApp(functions.config().firebase);
+admin.initializeApp({
+    credential: admin.credential.cert(firebaseDevCredential),
+    databaseURL: "https://todo-dev-a3a22.firebaseio.com"
+});
+
 
 // export const addMessage = AddMessage.listener;
 // export const makeUpperCase = UpCaseMessages.listener;

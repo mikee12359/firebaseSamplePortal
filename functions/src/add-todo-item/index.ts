@@ -15,30 +15,29 @@ const corsOptions: cors.CorsOptions = {
 };
 
 export const listener = functions.https.onRequest(async(request, response) => {
-    const prayerRequest = admin.database().ref('todoItems');
+    const todoItemsDatabaseRef = admin.database().ref('todoItems');
     var corsFn = cors(corsOptions);
 
     corsFn(request, response, async () => {
         let newTodoItem = new TodoItem();
-
-        if (!request.query.id) {
-            response.status(400).send("Error no Id!");
-            return;
-        }
 
         if (!request.query.content) {
             response.status(400).send("Error no content!");
             return;
         }
 
-        newTodoItem.id = request.query.id;
         newTodoItem.content = request.query.content;
         newTodoItem.isDone = false;
-        newTodoItem.createdAt = Date.now();
+        newTodoItem.createdAt = admin.database.ServerValue.TIMESTAMP;
         newTodoItem.updatedAt = newTodoItem.createdAt;
         
         // let data = parseMessage(request.body);
-        await prayerRequest.push(newTodoItem);
+        let pushedKey: any;
+        await todoItemsDatabaseRef.push(newTodoItem).then((newlyPushedData) => {
+            pushedKey = newlyPushedData.key;
+        });
+        newTodoItem.id = pushedKey;
+        await todoItemsDatabaseRef.child(pushedKey).set(newTodoItem);
 
         response.status(200).send("Success!");
     });
