@@ -78,6 +78,7 @@ module.exports = require("firebase-admin");
 const admin = __webpack_require__(0);
 const AddTodoItem = __webpack_require__(2);
 const GetTodoItem = __webpack_require__(7);
+const UpdateTodoItem = __webpack_require__(8);
 const firebaseDevCredential = __webpack_require__(6);
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp({
@@ -92,6 +93,7 @@ admin.initializeApp({
 // export const userTimeStamper = UserTimeStamper;
 exports.addTodoItem = AddTodoItem.listener;
 exports.getTodoItem = GetTodoItem.listener;
+exports.updateTodoItem = UpdateTodoItem.listener;
 
 
 /***/ }),
@@ -222,6 +224,76 @@ exports.listener = functions.https.onRequest((request, response) => __awaiter(th
             response.status(200).send("Filtered!");
         }
         response.status(500).send("Server Error");
+    }));
+}));
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const functions = __webpack_require__(3);
+const admin = __webpack_require__(0);
+const cors = __webpack_require__(4);
+const todo_item_1 = __webpack_require__(5);
+const corsOptions = {
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
+    credentials: true,
+    methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+    // origin: API_URL,
+    preflightContinue: false,
+    origin: true
+};
+exports.listener = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
+    const todoItemsDatabaseRef = admin.database().ref('todoItems');
+    var corsFn = cors(corsOptions);
+    corsFn(request, response, () => __awaiter(this, void 0, void 0, function* () {
+        if (request.method != "PUT") {
+            response.status(400).send("Request Method not supported!");
+        }
+        let todoItemUpdateData = new todo_item_1.TodoItem();
+        todoItemUpdateData = request.body;
+        if (!todoItemUpdateData.id) {
+            response.status(400).set("Missing Id!");
+            return;
+        }
+        console.log("Getting Ref");
+        const todoItemRef = todoItemsDatabaseRef.child(todoItemUpdateData.id);
+        let todoItemFromDatabase = new todo_item_1.TodoItem();
+        console.log("Before getting item");
+        // get the item from database
+        let noValue = false;
+        yield todoItemRef.once("value", snap => {
+            if (!snap.val()) {
+                noValue = true;
+            }
+            todoItemFromDatabase = snap.val();
+        });
+        if (noValue) {
+            response.status(400).send("Item not found");
+            return;
+        }
+        console.log("Got value from database");
+        // update the fields of the item
+        todoItemFromDatabase.content = todoItemUpdateData.content;
+        todoItemFromDatabase.isDone = todoItemUpdateData.isDone;
+        todoItemFromDatabase.updatedAt = admin.database.ServerValue.TIMESTAMP;
+        // Update Database
+        yield todoItemRef.set(todoItemFromDatabase).then(() => {
+            response.status(200).send(`Success Updating Item ${todoItemFromDatabase.id}`);
+            return;
+        });
+        response.status(500).send("Database update error");
     }));
 }));
 
