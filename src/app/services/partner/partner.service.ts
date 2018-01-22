@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Http, Response, Headers } from '@angular/http';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class PartnerService {
-    private partner: FirebaseObjectObservable<any>;
+    private partner: AngularFireObject<any>;
     private cloudFunctionsApiUri: string = "https://us-central1-soblessed-86039.cloudfunctions.net";
 
     private currentPartnerSource = new Subject<Partner>();
@@ -33,13 +33,21 @@ export class PartnerService {
     }
 
     setCurrentPartnerByUid(uid: string) {
-        this._firebaseDb.object(`/partners/${uid}`).subscribe((partnerResult: Partner) => {
-            console.log(partnerResult);
-            this.setCurrentPartner(partnerResult);
-        }, error => {
+        this._firebaseDb.object(`/partners/${uid}`).query.once("value", (snap) => {
+            let partnerFromDb: Partner = snap.val();
+            console.log(partnerFromDb)
+            this.setCurrentPartner(partnerFromDb);
+        }).catch(error => {
             console.error(error);
             throw new Error(error);
         });
+        
+        // .subscribe((partnerResult: Partner) => {
+            
+        // }, error => {
+        //     console.error(error);
+        //     throw new Error(error);
+        // });
     }
 
     // from https://angular.io/docs/ts/latest/guide/server-communication.html

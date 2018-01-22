@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 // import { PartnerService } from '../../services/partner/partner.service';
 // import { Partner } from '../../../models/partner';
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
 
 interface Employee {
   firstname: string;
   lastname: string;
+  age: number;
 }
 
 @Component({
@@ -21,7 +22,7 @@ interface Employee {
 export class StarterViewComponent implements OnDestroy, OnInit {
 
   public nav: any;
-  employeeList: FirebaseListObservable<Employee[]>
+  employeeList: AngularFireList<Employee[]>
   employees = [];
   employeeListSubscription: Subscription;
   firstName: string = "";
@@ -53,12 +54,18 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   public ngOnInit(): any {
     this.nav.className += " white-bg";
 
-    this.employeeListSubscription = this.employeeList.subscribe((result: Employee[]) => {
-      // result.sort();
-      this.employees = result;
-      // this.employees.sort();
-      // console.dir(this.employees);
-    })
+    this.employeeList.query.once("value", (snap) => {
+      this.employees = snap.val();
+      this.employees.sort();
+    }); 
+    
+    // .subscribe((result: Employee[]) => {
+    //   // result.sort();
+    //   this.employees = result;
+    //   // this.employees.sort();
+    //   // console.dir(this.employees);
+    // })
+
     // if (this._partnerService.currentPartnerObject) {
     // } else {
     //   this._router.navigateByUrl("/login");
@@ -109,11 +116,11 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   public addingDataToDatabase(): void {
     // console.log(this.employeeList);
     this.validateForm;
-    this.employeeList.push({
+    this.employeeList.push([{
       firstname: this.firstName,
       lastname: this.lastName,
       age: this.ageNumber
-    });
+    }]);
     // console.log(this.lastName);
   }
 
