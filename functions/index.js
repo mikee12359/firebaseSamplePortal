@@ -203,21 +203,24 @@ const corsOptions = {
 };
 exports.listener = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
     const todoItemsDatabaseRef = admin.database().ref('todoItems');
-    var corsFn = cors(corsOptions);
+    const corsFn = cors(corsOptions);
     corsFn(request, response, () => __awaiter(this, void 0, void 0, function* () {
-        let requestType = request.query.requestType || "all";
+        const requestType = request.query.requestType || "all";
         // GetAll
         if (requestType == "all") {
             let allTodoItems = [];
             yield todoItemsDatabaseRef.once("value", snap => {
                 // let data = snap.val();
                 // let data = JSON.stringify(snap.numChildren());
-                allTodoItems = snap.val();
+                snap.forEach((todoItemSnap) => {
+                    allTodoItems.push(todoItemSnap.val());
+                    return false; // To appease compiler. Returning true, will short circuit and stop getting values
+                });
                 response.status(200).send(JSON.stringify(allTodoItems));
                 return;
             });
         }
-        else if (requestType == "one") {
+        else if (requestType === "one") {
             response.status(200).send("One!");
         }
         else {

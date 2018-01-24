@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {RouterModule} from "@angular/router";
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
 
 import {ROUTES} from "./app.routes";
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import {AppviewsModule} from "./views/appviews/appviews.module";
 
 // App modules/components
 import {LayoutsModule} from "./components/common/layouts/layouts.module";
+import { TodoItemService } from 'app/services/todo-item/todo-item.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import {LayoutsModule} from "./components/common/layouts/layouts.module";
     BrowserModule,
     FormsModule,
     HttpModule,
+    HttpClientModule,
     DashboardsModule,
     LayoutsModule,
     AppviewsModule,
@@ -39,7 +42,7 @@ import {LayoutsModule} from "./components/common/layouts/layouts.module";
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, ToasterService, PartnerService, ShoutService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, ToasterService, PartnerService, ShoutService, TodoItemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -27,57 +27,16 @@
                 <h2>Active</h2>
             </div>
             <ul class="todo-list m-t ui-sortable">
-                <li>
+                <li *ngFor="let todoItem of todoItems">
                     <!-- <a class="check-link">
                         <i class="fa fa-check-square"></i>
                     </a> -->
-                    <span class="m-l-xs">Buy a milk</span>
-                    <i class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                    <span *ngIf="!todoItem.isEditing" class="m-l-xs">{{todoItem.content}}</span>
+                    <input *ngIf="todoItem.isEditing" class="m-l-xs" type="text" value="{{todoItem.content}}">
+                    <i (click)="editTodoItem(todoItem)" *ngIf="!todoItem.isEditing" class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                    <i (click)="saveTodoItem(todoItem)" *ngIf="todoItem.isEditing" class="btn fa fa-floppy-o fa-2x" aria-hidden="true"></i>
                     <i class="btn fa fa-window-close fa-2x" aria-hidden="true"></i>
-                    <button class="btn btn-white btn-sm" aria-hidden="true">Done</button>
-                </li>
-                <li>
-                    <!-- <a class="check-link">
-                        <i class="fa fa-check-square"></i>
-                    </a> -->
-                    <span class="m-l-xs ">Go to shop and find some products.</span>
-                    <i class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
                     <i class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-window-close fa-2x " aria-hidden="true"></i>
-                    <button class="btn btn-white btn-sm" aria-hidden="true">Done</button>
-                </li>
-                <li>
-                    <!-- <a class="check-link">
-                        <i class="fa fa-square-o"></i>
-                    </a> -->
-                    <span class="m-l-xs">Send documents to Mike</span>
-                    <i class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-window-close fa-2x" aria-hidden="true"></i>
-                    <button class="btn btn-white btn-sm" aria-hidden="true">Done</button>
-                    <!-- <small class="label label-primary">
-                        <i class="fa fa-clock-o"></i> 1 mins</small> -->
-                </li>
-                <li>
-                    <!-- <a class="check-link">
-                        <i class="fa fa-square-o"></i>
-                    </a> -->
-                    <span class="m-l-xs">Go to the doctor dr Smith</span>
-                    <i class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-window-close fa-2x" aria-hidden="true"></i>
-                    <button class="btn btn-white btn-sm" aria-hidden="true">Done</button>
-                </li>
-                <li>
-                    <!-- <a class="check-link">
-                        <i class="fa fa-square-o"></i>
-                    </a> -->
-                    <span class="m-l-xs">Plan vacation</span>
-                    <i class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-window-close fa-2x" aria-hidden="true"></i>
-                    <button class="btn btn-white btn-sm" aria-hidden="true">Done</button>
                 </li>
                 <li>
                     <a class="check-link">

@@ -16,10 +16,10 @@ const corsOptions: cors.CorsOptions = {
 
 export const listener = functions.https.onRequest(async(request, response) => {
     const todoItemsDatabaseRef = admin.database().ref('todoItems');
-    var corsFn = cors(corsOptions);
+    const corsFn = cors(corsOptions);
 
     corsFn(request, response, async () => {
-        let requestType = request.query.requestType || "all";
+        const requestType = request.query.requestType || "all";
 
         // GetAll
         if (requestType == "all"){
@@ -27,11 +27,16 @@ export const listener = functions.https.onRequest(async(request, response) => {
             await todoItemsDatabaseRef.once("value", snap => {
                 // let data = snap.val();
                 // let data = JSON.stringify(snap.numChildren());
-                allTodoItems = snap.val();
+
+                snap.forEach((todoItemSnap) => {
+                    allTodoItems.push(todoItemSnap.val());
+                    return false; // To appease compiler. Returning true, will short circuit and stop getting values
+                })
+
                 response.status(200).send(JSON.stringify(allTodoItems));
                 return;
             });
-        } else if (requestType == "one"){ // GetOneById
+        } else if (requestType === "one"){ // GetOneById
             response.status(200).send("One!");
         } else { // filtered
             response.status(200).send("Filtered!");

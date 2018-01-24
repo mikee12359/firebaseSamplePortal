@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 // import { Partner } from '../../../models/partner';
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { TodoItem, TodoItemUI } from '../../../models/todo-item';
+import { TodoItemService } from 'app/services/todo-item/todo-item.service';
 
 interface Employee {
   firstname: string;
@@ -24,47 +26,48 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   public nav: any;
   employeeList: AngularFireList<Employee[]>
   employees = [];
-  employeeListSubscription: Subscription;
-  firstName: string = "";
-  lastName: string = "";
-  ageNumber: number = 0;
 
-  // textToShout: string;
-  // shoutedText: string;
+  todoItems: TodoItemUI[] = [];
 
-  // users: FirebaseListObservable<any[]>;
-  // user: FirebaseObjectObservable<any>;
+  isShowEditField(): boolean {
+    return true;
+  }
 
   public constructor(
     private db: AngularFireDatabase,
     private _router: Router,
-    // private _partnerService: PartnerService, 
+    // private _partnerService: PartnerService,
     private _ngZone: NgZone,
+    private _todoItemService: TodoItemService,
     // private _toastService: ToasterService,
     // private _shoutService: ShoutService
   ) {
     this.nav = document.querySelector('nav.navbar');
-    this.employeeList = db.list("TODO");
-    console.log(this.employeeList);
-    // this.employeeList.push;
-    // db.object('')
-    // this.users = db.list('/users');
   }
 
   public ngOnInit(): any {
-    this.nav.className += " white-bg";
+    this.nav.className += ' white-bg';
+    const self = this;
 
-    this.employeeList.query.once("value", (snap) => {
-      this.employees = snap.val();
-      this.employees.sort();
-    }); 
-    
-    // .subscribe((result: Employee[]) => {
-    //   // result.sort();
-    //   this.employees = result;
-    //   // this.employees.sort();
-    //   // console.dir(this.employees);
-    // })
+    this._todoItemService.getAllTodoItems("all").subscribe(todoItems => {
+      console.log("Logging inside startview");
+      console.log(todoItems);
+
+      self._ngZone.run(() => {
+        self.todoItems = todoItems;
+        // for (let i = 0; i < todoItems.length; i++){
+        //   self.todoItems.push(new TodoItemUI(todoItems[i].id, todoItems[i].content, todoItems[i].isDone));
+        // }
+      });
+    });
+
+    // this.todoItems = [s
+    //   new TodoItemUI('1', 'Buy a milk', false),
+    //   new TodoItemUI('2', 'Get Married', false),
+    //   new TodoItemUI('3', 'Serve God', false),
+    //   new TodoItemUI('4', 'Graduate in College', true),
+    //   new TodoItemUI('5', 'Find a job', true)
+    // ]
 
     // if (this._partnerService.currentPartnerObject) {
     // } else {
@@ -72,39 +75,14 @@ export class StarterViewComponent implements OnDestroy, OnInit {
     // }
   }
 
-  public sortByFirstName(): any {
-
-    this.employees.sort((a, b) => {
-      if (a.firstname < b.firstname) return -1;
-      if (a.firstname > b.firstname) return 1;
-      return 0;
-    });
+  public editTodoItem(todoItem: TodoItemUI){
+    console.log('editTodoItem');
+    todoItem.isEditing = true;
   }
 
-  public sortByLastName(): any {
-
-    this.employees.sort((a, b) => {
-      if (a.lastname < b.lastname) return -1;
-      if (a.lastname > b.lastname) return 1;
-      return 0;
-    });
-  }
-
-  public sortByAge(): any {
-
-    this.employees.sort((a, b) => {
-      if (a.age < b.age) return -1;
-      if (a.age > b.age) return 1;
-      return 0;
-    })
-  }
-
-  public validateForm(): any {
-    let value = this.firstName;
-    if (value == "") {
-      alert("Name must be filled out!")
-    }
-    return false;
+  public saveTodoItem(todoItem: TodoItemUI){
+    console.log('saveTodoItem');
+    todoItem.isEditing = false;
   }
 
   reset() {
@@ -113,40 +91,8 @@ export class StarterViewComponent implements OnDestroy, OnInit {
     // be given the proper data
   }
 
-  public addingDataToDatabase(): void {
-    // console.log(this.employeeList);
-    this.validateForm;
-    this.employeeList.push([{
-      firstname: this.firstName,
-      lastname: this.lastName,
-      age: this.ageNumber
-    }]);
-    // console.log(this.lastName);
-  }
-
-  // onShoutClick(){
-  //   var self = this;
-  //   let getShoutTextSubscription = this._shoutService.getShoutText(this.textToShout).subscribe((shoutedText: string) => {
-  //     self._toastService.infoToast(shoutedText);
-  //     self.shoutedText = shoutedText;
-  //     getShoutTextSubscription.unsubscribe();
-  //   })
-  // }
-
   public ngOnDestroy(): any {
-    this.nav.classList.remove("white-bg");
+    this.nav.classList.remove('white-bg');
   }
 
 }
-
-
-// splitSortingInputNumber() {
-//   // console.dir(this.sortedString.split(",").map(i => parseInt(i)));
-//   // if(this.sortedString = "string"){}
-//   this.sortedNumber = this.sortedString.split(",").map(i => parseInt(i))
-//   console.log(this.sortedNumber); // split -method is used to split a string into an array of substrings, and returns the new array.
-//   this.sort(this.sortedNumber);
-
-
-//   console.log(this.sortedNumber);
-// }
