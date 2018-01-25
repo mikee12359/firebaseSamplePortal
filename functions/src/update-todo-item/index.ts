@@ -62,7 +62,7 @@ export const listener = functions.https.onRequest(async (request, response) => {
 
         // Update Database
         await todoItemRef.set(todoItemFromDatabase).then(() => {
-            response.status(200).send(`Success Updating Item ${todoItemFromDatabase.id}`);
+            response.status(200).send(JSON.stringify(true));
             return;
         });
 

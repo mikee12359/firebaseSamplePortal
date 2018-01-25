@@ -28,9 +28,26 @@ export class StarterViewComponent implements OnDestroy, OnInit {
   employees = [];
 
   todoItems: TodoItemUI[] = [];
+  activeTodoItems: TodoItemUI[] = [];
+  doneTodoItems: TodoItemUI[] = [];
+
+  addedUnsavedTodoItem: Boolean = false;
 
   isShowEditField(): boolean {
     return true;
+  }
+
+  refreshTodoItems(){
+    this.refreshActiveTodoItems();
+    this.refreshDoneTodoItems();
+  }
+
+  refreshActiveTodoItems(){
+    this.activeTodoItems = this.todoItems.filter(todoItem => todoItem.isDone == false);
+  }
+
+  refreshDoneTodoItems(){
+    this.doneTodoItems = this.todoItems.filter(todoItem => todoItem.isDone == true);
   }
 
   public constructor(
@@ -55,19 +72,9 @@ export class StarterViewComponent implements OnDestroy, OnInit {
 
       self._ngZone.run(() => {
         self.todoItems = todoItems;
-        // for (let i = 0; i < todoItems.length; i++){
-        //   self.todoItems.push(new TodoItemUI(todoItems[i].id, todoItems[i].content, todoItems[i].isDone));
-        // }
+        self.refreshTodoItems();
       });
     });
-
-    // this.todoItems = [s
-    //   new TodoItemUI('1', 'Buy a milk', false),
-    //   new TodoItemUI('2', 'Get Married', false),
-    //   new TodoItemUI('3', 'Serve God', false),
-    //   new TodoItemUI('4', 'Graduate in College', true),
-    //   new TodoItemUI('5', 'Find a job', true)
-    // ]
 
     // if (this._partnerService.currentPartnerObject) {
     // } else {
@@ -82,7 +89,89 @@ export class StarterViewComponent implements OnDestroy, OnInit {
 
   public saveTodoItem(todoItem: TodoItemUI){
     console.log('saveTodoItem');
-    todoItem.isEditing = false;
+    const self = this;
+
+    if (todoItem.id == null){
+      this._todoItemService.addTodoItem(todoItem.content).subscribe(todoItemFromDatabase => {
+        console.log(todoItemFromDatabase);
+
+        self._ngZone.run(() => {
+          console.log("Inside zone");
+          todoItem.id = todoItemFromDatabase.id;
+          todoItem.isDone = todoItemFromDatabase.isDone;
+          // todoItem = todoItemFromDatabase;
+          todoItem.isEditing = false;
+          self.refreshTodoItems();
+          self.addedUnsavedTodoItem = false;
+        });
+        
+      }, err => {
+        todoItem.isEditing = true;
+        alert("There was a problem - Item has not been added!");
+        console.log("Error in saveTodoItem()");
+      })
+    } else {
+      this._todoItemService.updateTodoItem(todoItem).subscribe(isUpdated => {
+        todoItem.isEditing = false;
+      }, error => {
+        todoItem.isEditing = true;
+        alert("There was a problem - Item has not been saved!");
+        console.log("Error in saveTodoItem()");
+      })
+    }
+  }
+
+
+  public addTodoItem(){
+    if (this.addedUnsavedTodoItem) return;
+
+    this.addedUnsavedTodoItem = true;
+    let newTodoItem = new TodoItemUI(null, null, false, true);
+    this.todoItems.push(newTodoItem);
+    this.refreshTodoItems();
+  }
+
+  public doneTodoItem(todoItem: TodoItemUI){
+    todoItem.isDone = true;
+
+    this._todoItemService.updateTodoItem(todoItem).subscribe(isUpdated => {
+      this.refreshTodoItems();
+    }, error => {
+      todoItem.isDone = false;
+      console.log("Error in doneTodoItem()");
+    })
+  }
+
+  public undoneTodoItem(todoItem: TodoItemUI){
+    todoItem.isDone = false;
+    
+    this._todoItemService.updateTodoItem(todoItem).subscribe(isUpdated => {
+      this.refreshTodoItems();
+    }, error => {
+      todoItem.isDone = true;
+      console.log("Error in undoneTodoItem()");
+    })
+  }
+
+  public deleteTodoItem(todoItem: TodoItemUI){
+    if (todoItem.id == null){
+      this.todoItems.splice(this.todoItems.length - 1, 1);
+      this.addedUnsavedTodoItem = false;
+      this.refreshTodoItems();
+      return;
+    }
+
+    let confirmDelete = confirm("Are you sure you want to delete?");
+    if (confirmDelete){
+      this._todoItemService.deleteTodoItem(todoItem.id).subscribe(isDeleted => {
+        let index = this.todoItems.findIndex(t => t.id == todoItem.id);
+        this.todoItems.splice(index, 1);
+
+        this.refreshTodoItems();
+      }, error => { 
+        // Handle error
+      })
+    }
   }
 
   reset() {

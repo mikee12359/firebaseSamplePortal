@@ -24,17 +24,16 @@ export const listener = functions.https.onRequest(async (request, response) => {
         }
 
         // Get the id
-        let todoItemDeleteData = new TodoItem();
-        todoItemDeleteData = request.body;
+        let todoItemId = request.query.id;
 
         // Delete from database
-        todoItemsDatabaseRef.child(todoItemDeleteData.id).remove((error) => {
+        todoItemsDatabaseRef.child(todoItemId).remove((error) => {
             if (error) {
                 response.status(400).send("Unable to delete item");
                 return;
             }
         }).then(() => {
-            response.status(200).send(`Item ${todoItemDeleteData.id} has been successfully deleted.`);
+            response.status(200).send(JSON.stringify(true));
             return;
         })
     });

@@ -39,6 +39,6 @@ export const listener = functions.https.onRequest(async(request, response) => {
         newTodoItem.id = pushedKey;
         await todoItemsDatabaseRef.child(pushedKey).set(newTodoItem);
 
-        response.status(200).send("Success!");
+        response.status(200).send(JSON.stringify(newTodoItem));
     });
 });

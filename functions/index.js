@@ -170,7 +170,7 @@ exports.listener = functions.https.onRequest((request, response) => __awaiter(th
         });
         newTodoItem.id = pushedKey;
         yield todoItemsDatabaseRef.child(pushedKey).set(newTodoItem);
-        response.status(200).send("Success!");
+        response.status(200).send(JSON.stringify(newTodoItem));
     }));
 }));
 
@@ -294,7 +294,7 @@ exports.listener = functions.https.onRequest((request, response) => __awaiter(th
         todoItemFromDatabase.updatedAt = admin.database.ServerValue.TIMESTAMP;
         // Update Database
         yield todoItemRef.set(todoItemFromDatabase).then(() => {
-            response.status(200).send(`Success Updating Item ${todoItemFromDatabase.id}`);
+            response.status(200).send(JSON.stringify(true));
             return;
         });
         response.status(500).send("Database update error");
@@ -320,7 +320,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const functions = __webpack_require__(1);
 const admin = __webpack_require__(0);
 const cors = __webpack_require__(2);
-const todo_item_1 = __webpack_require__(3);
 const corsOptions = {
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token"],
     credentials: true,
@@ -337,16 +336,15 @@ exports.listener = functions.https.onRequest((request, response) => __awaiter(th
             response.status(400).send("Request Method not supported!");
         }
         // Get the id
-        let todoItemDeleteData = new todo_item_1.TodoItem();
-        todoItemDeleteData = request.body;
+        let todoItemId = request.query.id;
         // Delete from database
-        todoItemsDatabaseRef.child(todoItemDeleteData.id).remove((error) => {
+        todoItemsDatabaseRef.child(todoItemId).remove((error) => {
             if (error) {
                 response.status(400).send("Unable to delete item");
                 return;
             }
         }).then(() => {
-            response.status(200).send(`Item ${todoItemDeleteData.id} has been successfully deleted.`);
+            response.status(200).send(JSON.stringify(true));
             return;
         });
     }));

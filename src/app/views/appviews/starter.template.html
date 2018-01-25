@@ -27,19 +27,19 @@
                 <h2>Active</h2>
             </div>
             <ul class="todo-list m-t ui-sortable">
-                <li *ngFor="let todoItem of todoItems">
+                <li *ngFor="let todoItem of activeTodoItems">
                     <!-- <a class="check-link">
                         <i class="fa fa-check-square"></i>
                     </a> -->
                     <span *ngIf="!todoItem.isEditing" class="m-l-xs">{{todoItem.content}}</span>
-                    <input *ngIf="todoItem.isEditing" class="m-l-xs" type="text" value="{{todoItem.content}}">
+                    <input *ngIf="todoItem.isEditing" class="m-l-xs" type="text" [(ngModel)]="todoItem.content">
                     <i (click)="editTodoItem(todoItem)" *ngIf="!todoItem.isEditing" class="btn fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
                     <i (click)="saveTodoItem(todoItem)" *ngIf="todoItem.isEditing" class="btn fa fa-floppy-o fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-window-close fa-2x" aria-hidden="true"></i>
-                    <i class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+                    <i (click)="deleteTodoItem(todoItem)" class="btn fa fa-window-close fa-2x" aria-hidden="true"></i>
+                    <i *ngIf="todoItem.id != null" (click)="doneTodoItem(todoItem)" class="btn fa fa-check-square-o fa-2x" aria-hidden="true"></i>
                 </li>
                 <li>
-                    <a class="check-link">
+                    <a class="check-link" (click)="addTodoItem()">
                         <i class="fa fa-plus-square"></i>
                         <span class="m-l-xs">Add a to-do</span>
                     </a>
@@ -67,28 +67,9 @@
                         </div>
                         <div class="ibox-content">
                             <ul class="todo-list m-t ui-sortable">
-                                <li>
-                                    <span class="m-l-xs">Buy a milk</span>
-
-                                </li>
-                                <li>
-                                    <span class="m-l-xs">Go to shop and find some products.</span>
-
-                                </li>
-                                <li>
-                                    <span class="m-l-xs">Send documents to Mike</span>
-                                </li>
-                                <li>
-                                    <span class="m-l-xs">Go to the doctor dr Smith</span>
-                                </li>
-                                <li>
-                                    <span class="m-l-xs">Plan vacation</span>
-                                </li>
-                                <li>
-                                    <span class="m-l-xs">Create new stuff</span>
-                                </li>
-                                <li>
-                                    <span class="m-l-xs">Call to Anna for dinner</span>
+                                <li *ngFor="let todoItem of doneTodoItems">
+                                    <span class="m-l-xs">{{todoItem.content}}</span>
+                                    <i (click)="undoneTodoItem(todoItem)" class="btn fa fa-undo fa-2x" aria-hidden="true"></i>
                                 </li>
                             </ul>
                         </div>
