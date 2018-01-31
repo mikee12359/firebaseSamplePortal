@@ -12,6 +12,8 @@ import {TodoListComponent} from "./todolist.component";
 
 import {PeityModule } from '../../components/charts/peity';
 import {SparklineModule } from '../../components/charts/sparkline';
+import { ModalModule } from 'ngx-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import {SparklineModule } from '../../components/charts/sparkline';
     SparklineModule,
     ChartsModule,
     FlotModule,
-    IboxtoolsModule
+    IboxtoolsModule,
+    ModalModule.forRoot()
   ],
   exports: [
     StarterViewComponent,

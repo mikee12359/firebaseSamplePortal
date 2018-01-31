@@ -11,11 +11,11 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angular
 import { TodoItem, TodoItemUI } from '../../../models/todo-item';
 import { TodoItemService } from 'app/services/todo-item/todo-item.service';
 
-interface Employee {
-  firstname: string;
-  lastname: string;
-  age: number;
-}
+// interface Employee {
+//   firstname: string;
+//   lastname: string;
+//   age: number;
+// }
 
 @Component({
   selector: 'starter',
@@ -24,8 +24,8 @@ interface Employee {
 export class StarterViewComponent implements OnDestroy, OnInit {
 
   public nav: any;
-  employeeList: AngularFireList<Employee[]>
-  employees = [];
+  // employeeList: AngularFireList<Employee[]>
+  // employees = [];
 
   todoItems: TodoItemUI[] = [];
   activeTodoItems: TodoItemUI[] = [];

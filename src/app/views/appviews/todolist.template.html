@@ -1,64 +1,96 @@
-<div class="ibox float-e-margins">
-    <div class="ibox-content">
-        <h2>TODO</h2>
-        <div class="ibox-content">
-            <form role="form" class="form-inline">
-                <div class="form-group">
-                    <label for="inputFirstName" class="sr-only">First Name</label>
-                    <input type="firstname" required name="firstName" placeholder="first name" id="inputFirstName" class="form-control">
-                </div>
-                <!-- <div class="form-group">
-                    <label for="inputLastName" class="sr-only">Last Name</label>
-                    <input type="lastname" placeholder="last name" required name="lastName" id="inputLastName" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="inputAge" class="sr-only">Age</label>
-                    <input type="age" placeholder="age" required name="age" id="inputAge" class="form-control">
-                </div> -->
-                <div class="form-group">
-                    <button class="btn btn-white" type="submit" onsubmit="return validateForm()">Add Data</button>
-                </div>
-            </form>
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>ATTENDANCE</h5>
+            <div class="ibox-tools">
+            </div>
         </div>
-        <ul class="todo-list m-t ui-sortable">
-            <li>
-                <a href="#" class="check-link">
-                    <i class="fa fa-check-square"></i>
-                </a>
-                <span class="m-l-xs todo-completed">Buy a milk</span>
-            </li>
-            <li>
-                <a href="#" class="check-link">
-                    <i class="fa fa-check-square"></i>
-                </a>
-                <span class="m-l-xs  todo-completed">Go to shop and find some products.</span>
-            </li>
-            <li>
-                <a href="#" class="check-link">
-                    <i class="fa fa-square-o"></i>
-                </a>
-                <span class="m-l-xs">Send documents to Mike</span>
-                <small class="label label-primary">
-                    <i class="fa fa-clock-o"></i> 1 mins</small>
-            </li>
-            <li>
-                <a href="#" class="check-link">
-                    <i class="fa fa-square-o"></i>
-                </a>
-                <span class="m-l-xs">Go to the doctor dr Smith</span>
-            </li>
-            <li>
-                <a href="#" class="check-link">
-                    <i class="fa fa-square-o"></i>
-                </a>
-                <span class="m-l-xs">Plan vacation</span>
-            </li>
-            <li>
-                <a href="#" class="check-link">
-                    <i class="fa fa-plus-square"></i>
-                    <span class="m-l-xs">Add a to-do</span>
-                </a>
-            </li>
-        </ul>
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name </th>
+                            <th>Phone </th>
+                            <th>Address </th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Patrick Smith</td>
+                            <td>0800 051213</td>
+                            <td>Inceptos Hymenaeos Ltd</td>
+                            <td>Jul 14, 2013</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Alice Jackson</td>
+                            <td>0500 780909</td>
+                            <td>Nec Euismod In Company</td>
+                            <td>Jul 16, 2013</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" class="btn btn-primary" (click)="openModal(template)">Log In</button>
+
+            <ng-template #template>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Attendance Form</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal">
+                        <p>Sign in today for more expirience.</p>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Name</label>
+                            <div class="col-lg-10">
+                                <input type="name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Phone</label>
+
+                            <div class="col-lg-10">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Address</label>
+                            <div class="col-lg-10">
+                                <input type="address" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- <div class="col-xs-12 col-12 col-md-3 form-group">
+                            <button class="btn btn-success" (click)="dp.toggle()">Date Picker</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-12 col-md-4 form-group">
+                                <input type="text" class="form-control" [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+                            </div>
+                        </div> -->
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Date</label>
+                                <div class="col-lg-10">
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button class="btn btn-sm btn-white" type="submit">Done</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-template>
+        </div>
     </div>
 </div>
